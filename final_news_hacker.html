@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+	<script src="./bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+	<link rel="stylesheet" href="./bower_components/angular-material-icons.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+	<link rel="stylesheet" href="./custom.css" />	
+</head>
+<body>
+	<md-toolbar class="md-primary">
+	   <div class="md-toolbar-tools">
+	     <md-button class="md-icon-button" aria-label="Icon">
+	       <md-icon md-svg-icon="fb.svg"></md-icon>
+   		  </md-button>
+	     <h2>
+	        <span>Hacker News</span>
+	      </h2>
+		  <span flex></span>
+
+	    </div>
+	</md-toolbar>
+	<hr/>
+	<div layout="column" role="main" ng-app="hackerNews" ng-controller="myCtrl">
+
+		<md-input-container class="md-block">
+	  		<label>Search</label>
+  			<input type="text" ng-model="news_search" placeholder="search (by name)" />
+		</md-input-container>
+		<div layout="row">
+			<div flex>
+				<md-input-container>
+					<md-select ng-model="SortOrder">
+		            	<md-option value="-created_at" selected>Select an option</md-option>
+		            	<md-option value="-created_at">Date (asc)</md-option>
+			            <md-option value="+created_at">Date (dec)</md-option>
+			            <md-option value="+num_points" selected>Points (asc)</md-option>
+			            <md-option value="-num_points">Points (dec)</md-option>
+			        </md-select>
+				</md-input-container>
+			</div>
+			<div flex>
+				<md-input-container>
+					<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			        Previous
+			    	</md-button>
+			    {{currentPage+1}}/{{numberOfPages()}}
+			    <md-button class="btn1" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			        Next
+			    </md-button>
+				</md-input-container>
+
+			</div>
+		</div>
+    	<table>
+    		<tr ng-repeat="x in news | filter: news_search | orderBy : SortOrder | startFrom:currentPage*pageSize | limitTo:pageSize">
+			    <td class="news-content">
+				    <p class="news-title">{{ $index+1 }}. <a target="_blank" href="{{ x.url }}" class="news-link">{{ x.title }}<a></p>
+				    <p class="news-subtitle">{{ x.num_points }} points by {{ x.author }} {{ calculateHours( x.created_at ) }} hours ago | {{ x.num_comments }} comments {{ x.created_at | elapsed }}</p>
+			    </td>
+
+			</tr>
+	    </ul>
+
+	</div>
+
+</body>
+<script type="text/javascript" src="mainapp.js">
+
+</script>
+</html>

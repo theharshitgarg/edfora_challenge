@@ -1,0 +1,16 @@
+.news-title{
+  font-size: 16px;
+}
+.news-subtitle{
+  font-size: 12px;
+  margin-top: -6px;
+}
+a.news-link {
+  text-decoration: none;
+  color: green;
+}
+.news-content{
+  color: green !important;
+  margin: 5px;
+  padding: 5px;
+}
